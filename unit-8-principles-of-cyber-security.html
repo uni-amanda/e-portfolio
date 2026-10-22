@@ -52,89 +52,62 @@
 
 <h2>Cybersecurity Threat Assessment and Mitigation Plan</h2>
 <ul>
-  <p>Scenario description 
+<h3>Scenario description</h3>
+<p>A nation-state threat actor group known as Volttrix conducted a 6-month reconnaissance campaign targeting a regional electric grid operator in the Balkans called Electric Energy Holding (EEH). During the pre-access reconnaissance Volttrix conducted intel about EEH's security system by first obtaining an employee’s breached VPN credentials from an access broker on the dark web, allowing Volttrix to enter the EEH system on that employee’s permission level as no MFA was in place. From this access, Volttrix could see company wide information about other employees, which led them to scrape LinkedIn for information about employees with SCADA (Supervisory Control and Data Acquisition) access following the OSINT (Open-Source Intelligence) approach. Volttrix succeeded in spearphishing an employee with SCADA access by sending the EEH operator a phishing email and subsequently gaining privileged access to the system. Inside the SCADA environment accessed with via the spearphished employee's account, Volttrix were able to move laterally around the OT (Operational Technology) environment beyond what they should be allowed to on that privilege level, as the network lacked proper segmentation. After Volttrix had gotten access to the system, the following four months were spent mapping the network and understanding the structure of the grid in order to do most damage. They observed the system while staying undetected and managed to discover a privilege escalation vulnerability that allowed them to gain admin access. After obtaining the needed information, Volttrix disabled remote access to prevent legitimate operators to regain control during the attack. After disabling the remote access, Volttrix started shutting substations down and succeeded in shutting down the electric grid in 35 percent of the country for more than six hours, before the system recovered. The disruption included the capital and rural areas including traffic signals, hospitals, and civilian homes.</p>
 
-A nation-state threat actor group known as Volttrix conducted a 6-month reconnaissance campaign targeting a regional electric grid operator in the Balkans called Electric Energy Holding (EEH). During the pre-access reconnaissance Volttrix conducted intel about EEH's security system by first obtaining an employee’s breached VPN credentials from an access broker on the dark web, allowing Volttrix to enter the EEH system on that employee’s permission level as no MFA was in place. From this access, Volttrix could see company wide information about other employees, which led them to scrape LinkedIn for information about employees with SCADA (Supervisory Control and Data Acquisition) access following the OSINT (Open-Source Intelligence) approach. Volttrix succeeded in spearphishing an employee with SCADA access by sending the EEH operator a phishing email and subsequently gaining privileged access to the system. Inside the SCADA environment accessed with via the spearphished employee's account, Volttrix were able to move laterally around the OT (Operational Technology) environment beyond what they should be allowed to on that privilege level, as the network lacked proper segmentation. After Volttrix had gotten access to the system, the following four months were spent mapping the network and understanding the structure of the grid in order to do most damage. They observed the system while staying undetected and managed to discover a privilege escalation vulnerability that allowed them to gain admin access.  After obtaining the needed information, Volttrix disabled remote access to prevent legitimate operators to regain control during the attack. After disabling the remote access, Volttrix started shutting substations down and succeeded in shutting down the electric grid in 35 percent of the country for more than six hours, before the system recovered. The disruption included the capital and rural areas including traffic signals, hospitals, and civilian homes.   
+<h4>Detection</h4>
+<p>The security team immediately received system-alerts about the disabled remote access and simultaneously noticed that something was suspicious as the protocols for system maintenance started and they saw that multiple substations were shut down consecutively. Since shutdown protocols should only trigger during scheduled maintenance, this raised suspicion in the control room, and they immediately activated their incident response plan.</p>
 
-Detection  
+<h4>Containment</h4>
+<p>Following the incident response activation, a member of the on-premises team contacted EEH's central security who informed them that they were unable to login remotely, indicating remote login had deliberately been disabled. The security team subsequently decided to isolate the compromised systems by force-ending all active sessions, including legitimate accounts, so the system could only be accessed locally.</p>
 
-The security team immediately received system-alerts about the disabled remote access and simultaneously noticed that something was suspicious as the protocols for system maintenance started and they saw that multiple substations were shut down consecutively. Since shutdown protocols should only trigger during scheduled maintenance, this raised suspicion in the control room, and they immediately activated their incident response plan.  
+<h4>Eradication</h4>
+<p>The national CERT (Computer Emergency Response Team) was contacted and helped EHH through the eradication. This included revoking elevated privileges on the compromised account, resetting credentials on all accounts, and scanning the network to check for any additional unauthorized access before confirming that no one but legitimate employees had access.</p>
 
-Containment  
+<h4>Recovery</h4>
+<p>To restore power, the on-premises team switched to manual control, physically restoring power section by section. Since several safety verification steps had to be completed at each substation before the recovery, this slowed the recovery process. The physical restoring of power took place immediately after the containment step, allowing for critically needed power to restore.</p>
+<p>While the SCADA system was not fully set up until the CERT confirmed the eradication of the system. All passwords got reset before EEH's security team reinstated the remote access gateway. Already at this step, the EEH security team determined a need for implementing MFA, so they implemented this to all employees together with the password reset.</p>
 
-Following the incident response activation, a member of the on-premises team contacted EEH's central security who informed them that they were unable to login remotely, indicating remote login had deliberately been disabled. The security team subsequently decided to isolate the compromised systems by force-ending all active sessions, including legitimate accounts, so the system could only be accessed locally.  
+<h4>Post-incident</h4>
+<p>After the systems recovered and power restored, CERT and EEH conducted a post-incident review including a threat assessment and a mitigation plan. During this review it was discovered that the true entry point was not the spearphished employee account, but through accidental data exposure from an employee's VPN credentials inadvertently exposed when a document containing them was moved to a shared folder with broader access than intended. This was likely discovered by an access broker by running automated scans as this is a common method for finding improperly stored credentials. Certain parts of the incident post-mortem were also found to have been handled well, for instance the automatic alert in the system upon anomalous behavior. Since operators monitoring the control room for extended time are susceptible to attention fatigue, important indicators could have been missed in the system if relying on manual monitoring alone, therefore combining physical detection and system wide alerts was the correct decision. Additionally, the team managed to trigger the incident response timely, starting the process early upon detection. Because of this incident CERT also decided to enforce audits on all critical infrastructures in the country to strengthen security.</p>
 
-Eradication  
+<h3>Threat assessment</h3>
+<p>The on-premises team acted fast, but there were several security gaps in the system that could have been avoided:</p>
+<ul>
+  <li>There was no MFA on VPN access, which allowed Volttrix to enter the system with just the stolen credentials.</li>
+  <li>Insufficient network segmentation within the OT/SCADA environment, allowing employees and in this case Volttrix to reach systems beyond the intended scope.</li>
+  <li>Misconfiguration in RBAC (Role Based Action Control), allowing operators to escalate to admin privileges.</li>
+  <li>No detection on Volttrix presence in the system, giving Volttrix prolonged time to observe the system and discover vulnerabilities.</li>
+  <li>Spearphishing of the employee gave Volttrix privileged access to SCADA.</li>
+  <li>Lack of on-site access for the security team, limiting their ability to act directly during the incident, delaying containment.</li>
+</ul>
 
-The national CERT (Computer Emergency Response Team) was contacted and helped EHH through the eradication. This included revoking elevated privileges on the compromised account, resetting credentials on all accounts, and scanning the network to check for any additional unauthorized access before confirming that no one but legitimate employees had access.  
+<h3>Mitigation plan</h3>
+<ul>
+  <li>Implement MFA for all accounts regardless of the privilege level. Change from password to passkeys to avoid leaked credentials or password reuse.</li>
+  <li>Implement segmentation within the OT/SCADA environment, so malicious actors or employees cannot move laterally throughout a system. Add least privilege access to all employees.</li>
+  <li>Fix RBAC misconfiguration that allows users with lower privileges to obtain admin access.</li>
+  <li>Ensure alerts for internal changes and detection of anomalies, for instance location, login times or length of user session, to flag when something might be compromised.</li>
+  <li>Ensure security training for all employees and emphasise the importance of verifying emails if not sure on the sender.</li>
+  <li>Ensure an out-of-band access for the security team to enter in case of disabled remote access. Train on-premises team to handle incident responses.</li>
+  <li>Maintain strong encryption for data at rest and in transit paired with strong access controls such as MFA to guard against credential-based attacks that bypass encryption entirely.</li>
+</ul>
+<p>The threat assessment determined that although EEH was NIS2 compliant and had recently passed an audit, this did not ensure security. Because of this, a full GAP analysis is recommended.</p>
 
-Recovery 
+<h3>Report</h3>
+<p>The nation-state group Volttrix gained unauthorized access to EEH's power grid by combining weak entry security, inadequate network segmentation, and misconfigured RBAC, resulting in the shutdown of power affecting 35 percent of the country before the issue got resolved. The security team acted quickly, but there were several gaps which left the power grid vulnerable to attack. Volttrix accessed the system by obtaining access to the VPN, which was only password protected. In order to sharpen security, a system should use MFA to strengthen authentication as this adds an additional layer on top of the password. It is also recommended to switch to a passkey as this removes the responsibility of choosing and securely storing passwords from the employees. In order to contain threat actors in case they do gain access to a system, adding network segmentation is highly beneficial and ensures that a bad actor is not able to move laterally through the system, but is contained just to the area they gained access to. Volttrix was in the system for several months without being detected, which shows a gap in system monitoring and alerts. It is recommended to use continuous monitoring to raise alerts when anomalous behavior is detected and limit unauthorized time within the system. Proper RBAC configurations are essential to remain secure. In this scenario, the nation-state group gained admin access because of misconfigured role permission. Although the data was sufficiently encrypted, and would not be readable by unauthorized parties, Volttrix got unauthorized access via a legitimate employee's account, meaning they could read the data directly without needing to intercept it in transit. This is why MFA matters; MFA would have protected against unauthorized access even with the stolen credentials, hence the data being unreadable to Volttrix. Given the number of security gaps in EEH's case, a full gap analysis would be highly beneficial to proactively detect vulnerabilities before incidents occur.</p>
+<p>Failure to secure such critical infrastructure has tremendous consequences, as hospitals without power will result in the loss of lives. Therefore, it was essential for EEH to have minimum downtime as critical infrastructure is a matter of public safety. Although EEH was NIS2 compliant, this incident reveals the gap between compliance policies and real-world security. Frameworks such as NIS2 ensure a baseline of security, but the language leaves specific controls up to interpretation, which means an organisation can pass an audit and be under the impression that they are secure, but still have meaningful security gaps. This underlines how compliance is never a security guarantee.</p>
 
-To restore power, the on-premises team switched to manual control, physically restoring power section by section. Since several safety verification steps had to be completed at each substation before the recovery, this slowed the recovery process. The physical restoring of power took place immediately after the containment step, allowing for critically needed power to restore.  
+<h3>Bibliography</h3>
+<p>Cybersecurity and Infrastructure Security Agency (2015) <em>NIPP 2013: Partnering for Critical Infrastructure Security and Resilience — Energy Sector-Specific Plan</em>. Available at: <a href="https://www.cisa.gov/sites/default/files/publications/nipp-ssp-energy-2015-508.pdf">https://www.cisa.gov/sites/default/files/publications/nipp-ssp-energy-2015-508.pdf</a> (Accessed: 21 September 2026).</p>
+<p>Cybersecurity and Infrastructure Security Agency (2024) <em>Foundations for OT Cybersecurity: Asset Inventory Guidance for Owners and Operators</em>. Available at: <a href="https://www.cisa.gov/resources-tools/resources/foundations-ot-cybersecurity-asset-inventory-guidance-owners-and-operators">https://www.cisa.gov/resources-tools/resources/foundations-ot-cybersecurity-asset-inventory-guidance-owners-and-operators</a> (Accessed: 21 September 2026).</p>
+<p>Directive (EU) 2022/2555 on measures for a high common level of cybersecurity across the Union (2022) <em>Official Journal</em> L 333, 27 December, pp. 80-152. Available at: <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555">https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555</a> (Accessed: 21 September 2026).</p>
+<p>National Institute of Standards and Technology (2023) <em>SP 800-82 Rev. 3: Guide to Operational Technology (OT) Security</em>. Available at: <a href="https://csrc.nist.gov/pubs/sp/800/82/r3/final">https://csrc.nist.gov/pubs/sp/800/82/r3/final</a> (Accessed: 21 September 2026).</p>
 
-While the SCADA system was not fully set up until the CERT confirmed the eradication of the system. All passwords got reset before EEH's security team reinstated the remote access gateway. Already at this step, the EEH security team determined a need for implementing MFA, so they implemented this to all employees together with the password reset.  
-
-Post-incident 
-
-After the systems recovered and power restored, CERT and EEH conducted a post-incident review including a threat assessment and a mitigation plan. During this review it was discovered that the true entry point was not the spearphished employee account, but through accidental data exposure from an employee's VPN credentials inadvertently exposed when a document containing them was moved to a shared folder with broader access than intended. This was likely discovered by an access broker by running automated scans as this is a common method for finding improperly stored credentials. Certain parts of the incident post-mortem were also found to have been handled well, for instance the automatic alert in the system upon anomalous behavior. Since operators monitoring the control room for extended time are susceptible to attention fatigue, important indicators could have been missed in the system if relying on manual monitoring alone, therefore combining physical detection and system wide alerts was the correct decision. Additionally, the team managed to trigger the incident response timely, starting the process early upon detection. Because of this incident CERT also decided to enforce audits on all critical infrastructures in the country to strengthen security. 
-
-Threat assessment 
-
-The on-premises team acted fast, but there were several security gaps in the system that could have been avoided: 
-
-There was no MFA on VPN access, which allowed Volttrix to enter the system with just the stolen credentials. 
-
-Insufficient network segmentation within the OT/SCADA environment, allowing employees and in this case Volttrix to reach systems beyond the intended scope. 
-
-Misconfiguration in RBAC (Role Based Action Control), allowing operators to escalate to admin privileges. 
-
-No detection on Volttrix presence in the system, giving Volttrix prolonged time to observe the system and discover vulnerabilities.  
-
-Spearphishing of the employee gave Volttrix privileged access to SCADA.  
-
-Lack of on-site access for the security team, limiting their ability to act directly during the incident, delaying containment. 
-
-Mitigation plan  
-
-Implement MFA for all accounts regardless of the privilege level. Change from password to passkeys to avoid leaked credentials or password reuse.  
-
-Implement segmentation within the OT/SCADA environment, so malicious actors or employees cannot move laterally throughout a system. Add least privilege access to all employees.  
-
-Fix RBAC misconfiguration that allows users with lower privileges to obtain admin access. 
-
-Ensure alerts for internal changes and detection of anomalies, for instance location, login times or length of user session, to flag when something might be compromised. 
-
-Ensure security training for all employees and emphasise the importance of verifying emails if not sure on the sender.  
-
-Ensure an out-of-band access for the security team to enter in case of disabled remote access. Train on-premises team to handle incident responses.  
-
-Maintain strong encryption for data at rest and in transit paired with strong access controls such as MFA to guard against credential-based attacks that bypass encryption entirely. 
-
-The threat assessment determined that although EEH was NIS2 compliant and had recently passed an audit, this did not ensure security. Because of this, a full GAP analysis is recommended.  
-
- 
-
-Report  
-
-The nation-state group Volttrix gained unauthorized access to EEH's power grid by combining weak entry security, inadequate network segmentation, and misconfigured RBAC, resulting in the shutdown of power affecting 35 percent of the country before the issue got resolved. The security team acted quickly, but there were several gaps which left the power grid vulnerable to attack. Volttrix accessed the system by obtaining access to the VPN, which was only password protected. In order to sharpen security, a system should use MFA to strengthen authentication as this adds an additional layer on top of the password. It is also recommended to switch to a passkey as this removes the responsibility of choosing and securely storing passwords from the employees. In order to contain threat actors in case they do gain access to a system, adding network segmentation is highly beneficial and ensures that a bad actor is not able to move laterally through the system, but is contained just to the area they gained access to. Volttrix was in the system for several months without being detected, which shows a gap in system monitoring and alerts. It is recommended to use continuous monitoring to raise alerts when anomalous behavior is detected and limit unauthorized time within the system. Proper RBAC configurations are essential to remain secure. In this scenario, the nation-state group gained admin access because of misconfigured role permission. Although the data was sufficiently encrypted, and would not be readable by unauthorized parties, Volttrix got unauthorized access via a legitimate employee's account, meaning they could read the data directly without needing to intercept it in transit. This is why MFA matters; MFA would have protected against unauthorized access even with the stolen credentials, hence the data being unreadable to Volttrix. Given the number of security gaps in EEH's case, a full gap analysis would be highly beneficial to proactively detect vulnerabilities before incidents occur.   
-
-Failure to secure such critical infrastructure has tremendous consequences, as hospitals without power will result in the loss of lives. Therefore, it was essential for EEH to have minimum downtime as critical infrastructure is a matter of public safety.  Although EEH was NIS2 compliant, this incident reveals the gap between compliance policies and real-world security. Frameworks such as NIS2 ensure a baseline of security, but the language leaves specific controls up to interpretation, which means an organisation can pass an audit and be under the impression that they are secure, but still have meaningful security gaps. This underlines how compliance is never a security guarantee. 
-
- 
-
-Bibliography 
-
-Cybersecurity and Infrastructure Security Agency (2015) NIPP 2013: Partnering for Critical Infrastructure Security and Resilience — Energy Sector-Specific Plan. Available at: https://www.cisa.gov/sites/default/files/publications/nipp-ssp-energy-2015-508.pdf (Accessed: 21 September 2026). 
-
-Cybersecurity and Infrastructure Security Agency (2024) Foundations for OT Cybersecurity: Asset Inventory Guidance for Owners and Operators. Available at: https://www.cisa.gov/resources-tools/resources/foundations-ot-cybersecurity-asset-inventory-guidance-owners-and-operators  (Accessed: 21 September 2026). 
-
-Directive (EU) 2022/2555 on measures for a high common level of cybersecurity across the Union (2022) Official Journal L 333, 27 December, pp. 80-152. Available at: https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32022L2555 (Accessed: 21 September 2026). 
-
-National Institute of Standards and Technology (2023) SP 800-82 Rev. 3: Guide to Operational Technology (OT) Security. Available at: https://csrc.nist.gov/pubs/sp/800/82/r3/final (Accessed: 21 September 2026). .</p>
 </ul>
 
 <ul>
-  <li><a href="launch-into-computing.html">Unit 8: Principles of Cyber Security</a> ← Back to Launch into Computing</li>
+  <li><a href="launch-into-computing.html">← Back to Launch into Computing</a>
 </ul>
 		</div>						
 				</section>
