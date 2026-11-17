@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<!--
+	Forty by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Unit 10: Strategic and Enterprise IT Management Aligning IT with Business Goals</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo"><strong>E-portfolio</strong></a>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+							<li><a href="launch-into-computing.html">Launch into Computing</a></li>
+							<li><a href="security-and-risk-management.html">Security and Risk Management</a></li>
+					</nav>
+
+				<!-- Main -->
+					<div id="main" class="alt">
+
+						<!-- One -->
+							<section id="one">
+								<div class="inner">
+									<header class="major">
+										<h1>Unit 10: Strategic and Enterprise IT Management Aligning IT with Business Goalsy</h1>
+									</header>
+									<p>The unit covers analysis and evaluation of risks in enterprise IT environments and the evaluation of frameworks and operational tools.</p>
+
+<h2>COBIT 2019 Report</h2>
+<ul>
+<p>This report is based on a SaaS appointment booking system for the healthcare sector and how it could use the COBIT framework (latest version COBIT 2019). COBIT 2019 consists of 40 objectives within five domains: EDM which works on a governing level and APO, BAI, DSS and MEA, which are on a management level (Saladdin and Handayani, 2025). A key factor of COBIT 2019 is this distinction between the board level and the implementation level. COBIT 2019 is not a certifiable standard, so companies do not have to adhere to each objective but should rather choose relevant objectives (Saladdin and Handayani, 2025). This report focuses on the following objectives: EDM03, APO10, APO12 and DSS04.</p>
+
+<p>EDM03: Ensured Risk Optimisation is the responsibility of defining the risk appetite. This is decided at board-level and falls under the governance part of COBIT 2019. This creates business value for the company, as it can demonstrate trust, making it an asset for the company. Examples of this objective could be: Minimal risk appetite to loss of patient data and low risk appetite on disruption of platform functionalities.</p>
+
+<p>APO10: Managed Vendors means that third party companies must adhere to the protection of client and patient data. For instance, a company’s SMS service provider sending reminders to patients should handle patient data confidentially and the vendor has an obligation to protect the shared data. The company can follow due diligence to ensure that the vendor complies with security by reviewing their certifications and by yearly auditing. This is an important step, as the company is held responsible for patient data, even when sharing it with vendors.</p>
+
+<p>APO12: Managed Risks is the responsibility of identifying, mitigating, and monitoring risks for the company. Risks with high impact might be: An employee falling victim to phishing, ransomware attacks or DDoS attacks. This objective ties directly back to EDM03 and works by adding specific controls to mitigate the risks in line with the risk appetite. Examples of this are directly implemented controls: yearly security training for all employees, network segmentation and Security Information and Event Management (SIEM).</p>
+
+<p>DSS04: Managed Continuity ensures critical parts continue running despite disruption. This includes that data is regularly backed up, that there is a failover environment in case of disruption and SLAs with recovery targets. It aims to recover service from DDoS attacks and help mitigate ransomware attacks. The latter, however, is not secured just by DSS04, as the data being backed up ensures that the company continues having access to it, but does not protect in cases where data has been stolen. Preventing data theft falls under APO12.</p>
+
+<h3>Implementation</h3>
+<p>The first part of implementing COBIT 2019 is to select the objectives valuable to the company. In this report, four objectives have been chosen to cover risks from different perspectives EDM03: governance, APO10: third-party risks, APO12: internal risks and DSS04: recovery when prevention fails.</p>
+<p>The next step for a company is to determine the risk appetite (EDM03) and then map the risks and set controls to mitigate those. The framework works in two layers; governance and management, which makes ownership clear, an important factor in the implementation as Antariksa et al. (2025) found that commitment from management contributed to the success of the implementation.</p>
+
+<h3>Competitiveness</h3>
+<p>By following COBIT 2019 a company can strengthen its risk management (Antariksa et al., 2025). It can also bridge the gap between business and IT, and in this case build trust, helping to win more hospital contracts. Selecting only relevant objectives enables a company to better allocate resources where they matter most.</p>
+
+<h3>Challenges and Benefits</h3>
+<p>A challenge, however, is that there is no certification for organisations adopting COBIT 2019. In a regulated industry, such as healthcare where certain standards are required, adding COBIT 2019 is not always feasible for smaller companies or companies with limited resources (Antariksa et al., 2025). If a company has the resources to implement COBIT 2019, a benefit is that it could sit above NIST or ISO 27001 and help organise the other frameworks.</p>
+
+<h3>Conclusion</h3>
+<p>COBIT 2019 is a framework helping companies reduce risks and align their business with IT, illustrated here through the importance of trust in healthcare. Objectives can be selected, so a company can focus on what brings the most value. COBIT 2019 brings value to companies, but in regulated environments, where compliance is a requirement, COBIT 2019 works best as a layer on top of existing frameworks.</p>
+
+<h3>Reference List</h3>
+<p>Antariksa, M.D.S., Perangin Angin, M. and Widodo, A.P. (2025) ‘COBIT 2019 framework in IT governance: a systematic literature review of implementation challenges and benefits across various industry sectors’, <em>Journal of Renewable Energy, Electrical, and Computer Engineering</em>, 5(1), pp. 99–105. Available at: <a href="https://doi.org/10.29103/jreece.v5i1.19501">https://doi.org/10.29103/jreece.v5i1.19501</a>.</p>
+<p>Saladdin, I.R. and Handayani, P.W. (2025) ‘Information technology governance implementation challenges in healthcare facilities: a systematic literature review’, <em>Sage Open</em>, 15(4). Available at: <a href="https://doi.org/10.1177/21582440251369322">https://doi.org/10.1177/21582440251369322</a>.</p>
+
+</ul>
+
+<ul>
+  <li><a href="launch-into-computing.html">← Back to Launch into Computing</a>
+</ul>
+		</div>						
+				</section>
+					</div>
+
+				
+				<!-- Footer -->
+					<footer id="footer">
+						<div class="inner">
+							<ul class="icons">
+								<li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+							</ul>
+						</div>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
